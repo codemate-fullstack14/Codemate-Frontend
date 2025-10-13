@@ -23,19 +23,19 @@ function LoginPage() {
           className="p-2.5 w-full border border-gray-300 rounded-md mb-4"
         />
 
-        <div className="mb-6 w-full text-end">
-          <span className="mr-2 text-gray-500">아직 회원이 아니시라면</span>
-          <Link to={"/register"} className="">
-            회원가입 &gt;
-          </Link>
-        </div>
-
         <button
           type="submit"
-          className="bg-blue-500 text-white w-full font-bold h-12"
+          className="mb-6 h-12 bg-blue-500 text-white w-full font-bold"
         >
           로그인
         </button>
+
+        <div className=" w-full text-end">
+          <span className="mr-2 text-gray-500">아직 회원이 아니시라면</span>
+          <Link to={"/user/register"} className="">
+            회원가입 &gt;
+          </Link>
+        </div>
       </div>
     </div>
   );

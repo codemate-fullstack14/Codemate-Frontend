@@ -1,8 +1,9 @@
 import { Route, Routes } from "react-router-dom";
-import LoginPage from "./pages/login";
+import LoginPage from "./pages/auth/login";
 import LayoutContainer from "./components/layouts/layout";
 import MainPage from "./pages/main";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import UserRegister from "./pages/auth/register";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         {/* 로그인 페이지는 보호하지 않음 */}
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/user/register" element={<UserRegister />} />
 
         {/* 보호 라우트 */}
         <Route element={<ProtectedRoute />}>
