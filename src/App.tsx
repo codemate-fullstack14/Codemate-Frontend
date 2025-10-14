@@ -2,8 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/auth/login";
 import LayoutContainer from "./components/layouts/layout";
 import MainPage from "./pages/main";
-import ProtectedRoute from "./utils/ProtectedRoute";
+// import ProtectedRoute from "./utils/ProtectedRoute";
 import UserRegister from "./pages/auth/register";
+import ChallengePage from "./pages/challenge";
 
 function App() {
   return (
@@ -14,13 +15,14 @@ function App() {
         <Route path="/user/register" element={<UserRegister />} />
 
         {/* 보호 라우트 */}
-        <Route element={<ProtectedRoute />}>
-          {/* 보호 라우트 내부에서 Layout 사용 */}
-          <Route element={<LayoutContainer />}>
-            <Route path="/main" element={<MainPage />} />
-            {/* 다른 보호된 페이지도 여기에 추가 */}
-          </Route>
+        {/* <Route element={<ProtectedRoute />}> */}
+        {/* 보호 라우트 내부에서 Layout 사용 */}
+        <Route element={<LayoutContainer />}>
+          <Route path="/main" element={<MainPage />} />
+          {/* 다른 보호된 페이지도 여기에 추가 */}
         </Route>
+        <Route path="/challenge" element={<ChallengePage />} />
+        {/* </Route> */}
 
         {/* 잘못된 경로 */}
         <Route path="*" element={<h1>404 Not Found</h1>} />
