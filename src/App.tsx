@@ -4,6 +4,7 @@ import LayoutContainer from "./components/layouts/layout";
 import MainPage from "./pages/main";
 // import ProtectedRoute from "./utils/ProtectedRoute";
 import UserRegister from "./pages/auth/register";
+import ChallengePage from "./pages/challenge";
 
 function App() {
   return (
@@ -19,8 +20,8 @@ function App() {
         <Route element={<LayoutContainer />}>
           <Route path="/main" element={<MainPage />} />
           {/* 다른 보호된 페이지도 여기에 추가 */}
-          <Route path="/sandbox" element={<MainPage />} />
         </Route>
+        <Route path="/challenge" element={<ChallengePage />} />
         {/* </Route> */}
 
         {/* 잘못된 경로 */}
