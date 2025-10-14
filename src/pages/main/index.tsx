@@ -45,7 +45,7 @@ function ProblemList() {
             key={id}
             className="
                 flex flex-col justify-between
-                bg-white rounded-xl border border-gray-200
+                bg-white rounded-md border border-gray-200
                 p-6 
               "
           >
@@ -53,8 +53,8 @@ function ProblemList() {
               <div className="text-gray-400 font-mono mb-2">{id}</div>
               <h3 className="text-lg font-semibold mb-4">{title}</h3>
             </div>
-            <button className="mt-auto bg-blue-500 text-white rounded-md py-2 hover:bg-blue-600 transition">
-              지금 풀기
+            <button className="mt-auto bg-blue-500 text-white font-bold rounded-sm py-2 hover:bg-blue-600 transition">
+              도전하기
             </button>
           </li>
         ))}
