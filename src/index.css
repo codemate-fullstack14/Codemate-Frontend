@@ -22,7 +22,6 @@ body {
 button {
   border: 1px solid transparent;
   cursor: pointer;
-  transition: border-color 0.25s;
 }
 
 .tossface {
