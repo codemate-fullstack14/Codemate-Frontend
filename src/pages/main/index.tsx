@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/ui/Button";
 
 function IntroBanner() {
   const navigate = useNavigate();
 
   const goToCchallenge = () => {
-    navigate("/challenge", { state: { id: 0 } });
+    navigate("/tutorial", { state: { id: 0 } });
   };
 
   return (
@@ -13,12 +14,11 @@ function IntroBanner() {
         환영합니다. <span className="font-bold">첫방문</span>이라면, 안내사항이
         있는 <span className="font-bold">연습문제</span>를 먼저 확인하세요.
       </h2>
-      <button
-        className="bg-white  font-semibold px-4 py-2 rounded-md hover:bg-blue-100 transition"
-        onClick={goToCchallenge}
-      >
-        연습문제 바로가기
-      </button>
+      <Button
+        text={"연습문제 바로가기"}
+        option={{ isIcon: true }}
+        change={goToCchallenge}
+      ></Button>
     </section>
   );
 }
@@ -53,9 +53,10 @@ function ProblemList() {
               <div className="text-gray-400 font-mono mb-2">{id}</div>
               <h3 className="text-lg font-semibold mb-4">{title}</h3>
             </div>
-            <button className="mt-auto bg-blue-500 text-white font-bold rounded-sm py-2 hover:bg-blue-600 transition">
-              도전하기
-            </button>
+            <Button
+              text={"도전하기"}
+              option={{ color: "brandtheme", isIcon: true }}
+            />
           </li>
         ))}
       </ol>
@@ -65,7 +66,7 @@ function ProblemList() {
 
 function MainPage() {
   return (
-    <div className="">
+    <div>
       {/* 안내 섹션 */}
       <IntroBanner />
 
