@@ -11,7 +11,7 @@ function IntroBanner() {
     <section className="flex flex-col sm:flex-row justify-between my-6 bg-yellow-300 items-center px-4 py-4 lg:rounded-lg">
       <h2 className=" text-center sm:text-left mb-2 sm:mb-0">
         환영합니다. <span className="font-bold">첫방문</span>이라면, 안내사항이
-        있는 <span className="font-bold">연습문제</span>를 먼저 풀어보세요.
+        있는 <span className="font-bold">연습문제</span>를 먼저 확인하세요.
       </h2>
       <button
         className="bg-white  font-semibold px-4 py-2 rounded-md hover:bg-blue-100 transition"

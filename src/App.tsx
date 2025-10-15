@@ -5,6 +5,7 @@ import LayoutContainer from "./components/layouts/layout";
 import LoadingSpinner from "./components/ui/LoadingSpinner";
 // import ProtectedRoute from "./utils/ProtectedRoute";
 
+const MemberPage = lazy(() => import("./pages/member"));
 const MainPage = lazy(() => import("./pages/main"));
 const LoginPage = lazy(() => import("./pages/auth/login"));
 const UserRegister = lazy(() => import("./pages/auth/register"));
@@ -19,7 +20,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/user/register" element={<UserRegister />} />
 
-        {/* jwt 보호 라우트 */}
+        {/* jwt 보호 라우트 로그인 연동시 작업 해야함 */}
         {/* <Route element={<ProtectedRoute />}>
         </Route> */}
 
@@ -41,7 +42,17 @@ function App() {
               </Suspense>
             }
           />
+          <Route
+            path="mypage"
+            element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <MemberPage />
+              </Suspense>
+            }
+          />
         </Route>
+
+        {/* 알고리즘 문제를 풀 공간 */}
         <Route
           path="/challenge"
           element={
