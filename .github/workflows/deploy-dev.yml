@@ -5,11 +5,12 @@ on:
     branches:
       - develop
     tags:
-      - "v*" # v로 시작하는 태그에만 반응
+      - "v-dev*"  # 개발용 태그만 배포
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
 
@@ -29,4 +30,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
-          destination_branch: gh-pages-dev # 개발용 gh-pages 브랜치
+          publish_branch: gh-pages-dev
