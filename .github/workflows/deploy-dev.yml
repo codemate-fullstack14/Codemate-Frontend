@@ -1,5 +1,8 @@
 name: Deploy Dev
 
+permissions:
+  contents: write 
+  
 on:
   push:
     branches:
