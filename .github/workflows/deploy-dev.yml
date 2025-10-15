@@ -2,11 +2,9 @@ name: Deploy Dev
 
 permissions:
   contents: write 
-  
+
 on:
   push:
-    branches:
-      - develop
     tags:
       - "v-dev*"  # 개발용 태그만 배포
 

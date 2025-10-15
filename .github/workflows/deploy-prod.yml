@@ -1,9 +1,10 @@
 name: Deploy Prod
 
+permissions:
+  contents: write 
+  
 on:
   push:
-    branches:
-      - main
     tags:
       - "v*"  # 운영용 태그만 배포
 

@@ -8,4 +8,5 @@ export default defineConfig({
   build: {
     outDir: "dist", // 배포용 빌드 산출물 폴더 지정
   },
+  base: "/Codemate-Frontend/",
 });
