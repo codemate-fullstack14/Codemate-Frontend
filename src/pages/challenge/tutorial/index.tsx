@@ -1,5 +1,6 @@
 import Editor from "@monaco-editor/react";
 import React from "react";
+import Button from "../../../components/ui/Button";
 
 interface CodeEditorProps {
   language?: string;
@@ -7,7 +8,7 @@ interface CodeEditorProps {
   onChange?: (value: string | undefined) => void;
 }
 
-const ChallengePage: React.FC<CodeEditorProps> = ({
+const TutorialPage: React.FC<CodeEditorProps> = ({
   language = "python",
   value = `# 여기에 코드를 작성하세요\n print("hello world!")`,
   onChange,
@@ -38,12 +39,17 @@ const ChallengePage: React.FC<CodeEditorProps> = ({
         <section className="flex-[2] bg-white shadow-md border border-gray-200 p-4 flex flex-col">
           {/* 버튼 영역 */}
           <div className="flex justify-end gap-2 mb-3">
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-sm text-sm font-medium transition">
-              코드 테스트
-            </button>
-            <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-sm text-sm font-medium transition">
-              코드 제출
-            </button>
+            <Button
+              text={"코드 테스트"}
+              option={{ color: "brandtheme" }}
+              className="p-0"
+            />
+
+            <Button
+              text={"코드 제출"}
+              className="bg-green-500 hover:bg-green-600"
+              option={{ isIcon: true }}
+            />
           </div>
 
           {/* 코드 에디터 */}
@@ -100,4 +106,4 @@ const ChallengePage: React.FC<CodeEditorProps> = ({
   );
 };
 
-export default ChallengePage;
+export default TutorialPage;
