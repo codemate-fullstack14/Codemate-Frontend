@@ -44,7 +44,7 @@ function Header() {
     <header className="sticky top-0 bg-white border-b border-gray-200 z-10">
       <div className="flex justify-between items-center max-w-5xl w-full mx-auto h-[60px]">
         <Link to={"/"}>
-          <img src="/favicon.png" alt="brandlogo" className="block w-14" />
+          <img src="favicon.png" alt="brandlogo" className="block w-14" />
         </Link>
 
         <Glb />
