@@ -1,12 +1,12 @@
-name: Deploy Prod
+name: Deploy Dev
 
 permissions:
   contents: write 
-  
+
 on:
   push:
     tags:
-      - "v*"  # 운영용 태그만 배포
+      - "v*"
 
 jobs:
   build-and-deploy:
@@ -32,4 +32,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           publish_branch: gh-pages
-          force_orphan: true  
+          force_orphan: true   
