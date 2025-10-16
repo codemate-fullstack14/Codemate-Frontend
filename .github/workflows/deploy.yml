@@ -26,11 +26,17 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Verify build output
-        run: ls -R dist
-
       - name: Copy 404.html for SPA
         run: cp dist/index.html dist/404.html
+
+      - name: Clear previous gh-pages cache
+        run: |
+          git fetch origin gh-pages || true
+          git checkout gh-pages || git checkout --orphan gh-pages
+          git rm -rf . || true
+          git clean -fxd || true
+          git checkout -
+        continue-on-error: true
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
@@ -39,4 +45,3 @@ jobs:
           publish_branch: gh-pages
           publish_dir: ${{ github.workspace }}/dist
           force_orphan: true
-          clean: true
