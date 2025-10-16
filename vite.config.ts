@@ -7,5 +7,5 @@ export default defineConfig({
   build: {
     outDir: "dist",
   },
-  base: "/Codemate-Frontend/", // 필수: 레포 이름과 일치
+  base: "/Codemate-Frontend/",
 });
