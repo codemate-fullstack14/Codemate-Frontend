@@ -1,23 +1,25 @@
-<script>
-  var segmentCount = 1;
-  var l = window.location;
-  l.replace(
-    l.protocol +
-      "//" +
-      l.hostname +
-      (l.port ? ":" + l.port : "") +
-      l.pathname
-        .split("/")
-        .slice(0, 1 + segmentCount)
-        .join("/") +
-      "/?p=/" +
-      l.pathname
-        .slice(1)
-        .split("/")
-        .slice(segmentCount)
-        .join("/")
-        .replace(/&/g, "~and~") +
-      (l.search ? "&q=" + l.search.slice(1).replace(/&/g, "~and~") : "") +
-      l.hash
-  );
-</script>
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="0; URL=/Codemate-Frontend/index.html" />
+    <script>
+      (function(l){
+        const base = "/Codemate-Frontend"; // base 경로
+        if(l.search){
+          var q={};
+          l.search.slice(1).split("&").forEach(function(v){
+            var a=v.split("=");
+            q[a[0]]=a.slice(1).join("=").replace(/~and~/g,"&");
+          });
+          if(q.p!==undefined){
+            window.location.href = base + "/index.html?p=" + q.p + (q.q ? "&q=" + q.q : "") + l.hash;
+          }
+        } else {
+          window.location.href = base + "/index.html";
+        }
+      })(window.location);
+    </script>
+  </head>
+  <body></body>
+</html>
