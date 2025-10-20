@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://codemate-fullstack14.github.io/Codemate-Frontend/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
