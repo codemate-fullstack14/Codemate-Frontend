@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 const useLogin = () => {
   const login = async (email: string, password: string) => {
     const res = await apiFetch<{ accessToken: string; refreshToken: string }>(
-      "http://localhost:8080/auth/login",
+      "/auth/login",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

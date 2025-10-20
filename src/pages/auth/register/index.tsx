@@ -22,18 +22,15 @@ const useRegisterMember = (
   const registerMember = async () => {
     setLoading(true);
     try {
-      const res = await apiFetch<ResAuthApi>(
-        "http://localhost:8080/auth/register",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email,
-            password,
-            nickname,
-          }),
-        }
-      );
+      const res = await apiFetch<ResAuthApi>("/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+          nickname,
+        }),
+      });
 
       if (res.success) {
         openPopup({

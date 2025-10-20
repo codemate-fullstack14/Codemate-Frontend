@@ -1,4 +1,23 @@
+import { useEffect, useState } from "react";
+import apiFetch from "../../utils/apiFetch";
+
+const useGetRankList = () => {
+  const [] = useState([]);
+
+  const init = async () => {
+    const res = await apiFetch("/api/rankings/problem/4", {
+      method: "GET",
+    });
+    console.log(res);
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+};
+
 function RankPage() {
+  useGetRankList();
   const data = [
     {
       title: "순서 바꾸기",
