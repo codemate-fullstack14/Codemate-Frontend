@@ -3,6 +3,8 @@ import { lazy, Suspense } from "react";
 
 import LayoutContainer from "./components/layouts/layout";
 import LoadingSpinner from "./components/ui/LoadingSpinner";
+import Layer from "./components/layer";
+import AbsPopupProvider from "./components/popup/AbsPopupProvider";
 
 const TutorialPage = lazy(() => import("./pages/challenge/tutorial"));
 const MemberPage = lazy(() => import("./pages/member"));
@@ -101,6 +103,8 @@ function App() {
           }
         />
       </Routes>
+      <AbsPopupProvider />
+      <Layer />
     </>
   );
 }
