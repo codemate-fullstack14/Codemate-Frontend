@@ -79,7 +79,7 @@ function MainPage() {
         <ul className="grid  sm:grid-cols-1 lg:grid-cols-3 gap-8 px-6 sm:px-10 max-w-6xl mx-auto">
           <li className="flex flex-col items-center p-6 border border-red-200 bg-red-50 rounded-2xl shadow-sm">
             <img
-              src="src/assets/contract.png"
+              src="/assets/contract.png"
               alt="AI 평가 기능"
               className="w-32 h-32 object-contain mb-4"
             />
@@ -90,7 +90,7 @@ function MainPage() {
 
           <li className="flex flex-col items-center p-6 border border-blue-200 bg-blue-50 rounded-2xl shadow-sm">
             <img
-              src="src/assets/chat.png"
+              src="/assets/chat.png"
               alt="채팅 협업 기능"
               className="w-32 h-32 object-contain mb-4"
             />
@@ -101,7 +101,7 @@ function MainPage() {
 
           <li className="flex flex-col items-center p-6 border border-orange-200 bg-orange-50 rounded-2xl shadow-sm">
             <img
-              src="src/assets/medal.png"
+              src="/assets/medal.png"
               alt="랭킹 시스템"
               className="w-32 h-32 object-contain mb-4"
             />

@@ -3,7 +3,7 @@ import { resolve } from "path";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [react(), tailwindcss()],
   build: {
     outDir: "dist",
@@ -14,5 +14,5 @@ export default defineConfig({
       },
     },
   },
-  base: "/Codemate-Frontend/",
-});
+  base: command === "serve" ? "/" : "/Codemate-Frontend/",
+}));
