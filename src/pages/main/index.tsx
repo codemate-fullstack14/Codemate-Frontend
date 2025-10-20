@@ -79,9 +79,11 @@ function MainPage() {
         <ul className="grid  sm:grid-cols-1 lg:grid-cols-3 gap-8 px-6 sm:px-10 max-w-6xl mx-auto">
           <li className="flex flex-col items-center p-6 border border-red-200 bg-red-50 rounded-2xl shadow-sm">
             <img
-              src="/assets/contract.png"
+              src={`${import.meta.env.BASE_URL}assets/contract.png`}
               alt="AI 평가 기능"
               className="w-32 h-32 object-contain mb-4"
+              width={160}
+              height={160}
             />
             <p className="text-gray-700 font-medium">
               AI가 제출 시간과 코드를 분석해 <br /> 합리적인 평가를 제공해요.
@@ -90,9 +92,11 @@ function MainPage() {
 
           <li className="flex flex-col items-center p-6 border border-blue-200 bg-blue-50 rounded-2xl shadow-sm">
             <img
-              src="/assets/chat.png"
+              src={`${import.meta.env.BASE_URL}assets/chat.png`}
               alt="채팅 협업 기능"
               className="w-32 h-32 object-contain mb-4"
+              width={160}
+              height={160}
             />
             <p className="text-gray-700 font-medium">
               실시간 채팅으로 함께 문제를 풀며 <br /> 더 쉽게 배우세요.
@@ -101,9 +105,11 @@ function MainPage() {
 
           <li className="flex flex-col items-center p-6 border border-orange-200 bg-orange-50 rounded-2xl shadow-sm">
             <img
-              src="/assets/medal.png"
+              src={`${import.meta.env.BASE_URL}assets/medal.png`}
               alt="랭킹 시스템"
               className="w-32 h-32 object-contain mb-4"
+              width={160}
+              height={160}
             />
             <p className="text-gray-700 font-medium">
               꾸준히 도전하고 성장해 <br /> 금메달을 획득하세요!
