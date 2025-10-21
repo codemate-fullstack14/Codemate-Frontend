@@ -8,7 +8,10 @@ type TabType = "myInfo" | "myHistory";
 
 function MyHistory() {
   const initHistory = async () => {
-    const res = apiFetch("/api/submissions/1", { method: "GET" });
+    const res = apiFetch("/reviews", {
+      method: "POST",
+      body: JSON.stringify({ submissionId: 17 }),
+    });
     console.log(res);
   };
 
