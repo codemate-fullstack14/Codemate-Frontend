@@ -1,53 +1,27 @@
-import { useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button";
-import { useEffect, useState } from "react";
-import apiFetch from "../../utils/apiFetch";
+import { useChallengeList, useTutorial } from "./hook";
 
 function IntroBanner() {
-  const navigate = useNavigate();
-
-  const goToCchallenge = () => {
-    navigate("/tutorial", { state: { id: 0 } });
-  };
+  const goToTutorial = useTutorial();
 
   return (
     <section className="flex flex-col sm:flex-row justify-between my-6 bg-yellow-300 items-center px-4 py-4 lg:rounded-lg">
       <h2 className=" text-center sm:text-left mb-2 sm:mb-0">
         환영합니다. <span className="font-bold">첫방문</span>이라면, 안내사항이
-        있는 <span className="font-bold">연습문제</span>를 먼저 확인하세요.
+        있는 <span className="font-bold">연습문제</span>를 확인하세요.
       </h2>
+
       <Button
         text={"연습문제 바로가기"}
         option={{ isIcon: true }}
-        change={goToCchallenge}
+        change={goToTutorial}
       ></Button>
     </section>
   );
 }
 
 function ProblemList() {
-  const [list, setList] = useState<
-    { id: number; title: string; description: string }[]
-  >([]);
-  const navigate = useNavigate();
-  const initList = async () => {
-    const res = await apiFetch<
-      { id: number; title: string; description: string }[]
-    >("/problems", {
-      method: "GET",
-    });
-    setList(
-      res?.items
-        ? res.items.sort((a, b) => {
-            return a.id - b.id;
-          })
-        : []
-    );
-  };
-
-  useEffect(() => {
-    initList();
-  }, []);
+  const { challengeList, goToChallenge } = useChallengeList();
 
   return (
     <section className="block px-4 lg:px-0 mb-8">
@@ -60,7 +34,7 @@ function ProblemList() {
             lg:grid-cols-2
           "
       >
-        {list.map(({ id, title, description }) => (
+        {challengeList.map(({ id, title, description }) => (
           <li
             key={id}
             className="
@@ -78,7 +52,7 @@ function ProblemList() {
               text={"도전하기"}
               option={{ color: "brandtheme", isIcon: true }}
               change={() => {
-                navigate("/challenge", { state: id });
+                goToChallenge(id);
               }}
             />
           </li>

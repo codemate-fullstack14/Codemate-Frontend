@@ -11,19 +11,23 @@ interface ButtonOption {
 }
 
 interface IButtonProps {
+  id?: string;
   text: string | number;
   change?: MouseEventHandler<HTMLButtonElement>;
   className?: string;
   option?: ButtonOption;
   type?: "button" | "submit";
+  disabled?: boolean;
 }
 
 const Button: React.FC<IButtonProps> = ({
+  id,
   text,
   change,
   className = "",
   type = "button",
   option = {},
+  disabled = false,
 }) => {
   const { size = "md", color = "gray", round = 8, isIcon = false } = option;
 
@@ -48,9 +52,11 @@ const Button: React.FC<IButtonProps> = ({
 
   return (
     <button
+      id={id}
       onClick={change}
       className={`flex items-center justify-center font-bold transition-colors duration-200 ${sizeClasses} ${colorClasses} ${roundClasses} ${className}`}
       type={type}
+      disabled={disabled}
     >
       <span>{text}</span>
       {isIcon && (

@@ -51,7 +51,7 @@ const ChallengePage: React.FC = () => {
 
   const submit = async () => {
     try {
-      const res = await apiFetch("/api/submissions", {
+      await apiFetch("/api/submissions", {
         method: "POST",
         body: JSON.stringify({
           problemId: state,
@@ -60,14 +60,21 @@ const ChallengePage: React.FC = () => {
         }),
       });
 
-      console.log(res);
-
       openPopup({
         visible: true,
         popupType: "alert",
         header: { title: "제출 완료" },
-        body: <p className="text-center">코드가 성공적으로 제출되었습니다.</p>,
-        footer: { onConfirm() {} },
+        body: (
+          <p className="text-center">
+            코드가 성공적으로 제출되었습니다.
+            <br /> 홈으로 돌아갑니다.
+          </p>
+        ),
+        footer: {
+          onConfirm() {
+            navigate("/");
+          },
+        },
       });
     } catch (err) {
       openPopup({
@@ -158,12 +165,19 @@ const ChallengePage: React.FC = () => {
                 automaticLayout: true,
               }}
               onMount={(editor) => {
-                editor.onKeyDown((e) => {
-                  if ((e.metaKey || e.ctrlKey) && e.code === "KeyV") {
-                    e.preventDefault();
-                    alert("붙여넣기는 허용되지 않습니다.");
+                editor.onKeyDown(
+                  (e: {
+                    metaKey: any;
+                    ctrlKey: any;
+                    code: string;
+                    preventDefault: () => void;
+                  }) => {
+                    if ((e.metaKey || e.ctrlKey) && e.code === "KeyV") {
+                      e.preventDefault();
+                      alert("붙여넣기는 허용되지 않습니다.");
+                    }
                   }
-                });
+                );
                 editor.updateOptions({ contextmenu: false });
               }}
             />

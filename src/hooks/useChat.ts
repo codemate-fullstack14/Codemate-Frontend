@@ -20,7 +20,7 @@ export const useChat = () => {
     if (!token) return;
 
     // SockJS 사용
-    const socket = new SockJS("http://localhost:8080/ws");
+    const socket = new SockJS("http://3.107.155.57/ws");
 
     const client = new Client({
       webSocketFactory: () => socket,
