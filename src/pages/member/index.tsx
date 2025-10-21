@@ -1,15 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import apiFetch from "../../utils/apiFetch";
+import { useAuthStore } from "../../store/authStore";
+import { usePopupStore } from "../../store/popupStore";
+import { useNavigate } from "react-router-dom";
 
 type TabType = "myInfo" | "myHistory";
 
-function MemberPage() {
-  const [active, setActive] = useState<TabType>("myInfo");
+function MyHistory() {
+  const initHistory = async () => {
+    const res = apiFetch("/api/submissions/1", { method: "GET" });
+    console.log(res);
+  };
 
-  // 로그아웃 예시 기능 (쿠키 제거 or 로컬스토리지 clear 등)
+  useEffect(() => {
+    initHistory();
+  }, []);
+
+  return <></>;
+}
+
+function MemberPage() {
+  const { logout } = useAuthStore();
+  const { openPopup } = usePopupStore();
+  const [active, setActive] = useState<TabType>("myInfo");
+  const navigate = useNavigate();
+
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    alert("로그아웃 되었습니다!");
-    window.location.href = "/";
+    logout();
+    openPopup({
+      visible: true,
+      popupType: "alert",
+      body: <p>로그아웃되었습니다.</p>,
+      header: { title: "로그아웃" },
+      footer: {
+        onConfirm() {
+          navigate("/login");
+        },
+      },
+    });
   };
 
   return (
@@ -67,7 +95,7 @@ function MemberPage() {
         {active === "myHistory" && (
           <div>
             <h2 className="text-2xl font-semibold mb-4">내기록</h2>
-            <p>여기에 활동 기록을 표시합니다.</p>
+            <MyHistory />
           </div>
         )}
       </main>

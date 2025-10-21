@@ -79,7 +79,7 @@ function RankPage() {
   const { allRanking, sumRanking } = useGetRankList();
 
   return (
-    <div className="pt-6 mx-auto space-y-6">
+    <div className="pt-6 mx-auto space-y-6 px-4 lg:px-0">
       <div>
         <h2 className="font-bold text-xl mb-4">종합순위</h2>
         <ul className="space-y-2">

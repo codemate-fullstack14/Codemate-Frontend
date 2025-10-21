@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import apiFetch from "../utils/apiFetch";
+import Cookies from "js-cookie";
 
 interface User {
   id: number;
@@ -41,6 +42,9 @@ export const useAuthStore = create<AuthState>()(
       },
 
       logout: () => {
+        Cookies.remove("accessToken");
+        Cookies.remove("refreshToken");
+
         set({ user: null, initialized: false });
         sessionStorage.removeItem("auth-storage"); // 명시적 제거
       },

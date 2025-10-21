@@ -49,6 +49,7 @@ const ChallengePage: React.FC = () => {
     return `${hours}:${minutes}:${secs}`;
   };
 
+  console.log(state);
   const submit = async () => {
     try {
       await apiFetch("/api/submissions", {
