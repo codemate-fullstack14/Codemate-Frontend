@@ -5,6 +5,9 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig(({ command }) => ({
   plugins: [react(), tailwindcss()],
+  define: {
+    global: "window",
+  },
   build: {
     outDir: "dist",
     rollupOptions: {

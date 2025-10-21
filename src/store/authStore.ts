@@ -47,7 +47,7 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "auth-storage",
-      storage: createJSONStorage(() => sessionStorage), // ✅ 이렇게 써야 타입 통과
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );
