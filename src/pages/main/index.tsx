@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button";
+import { useEffect, useState } from "react";
+import apiFetch from "../../utils/apiFetch";
 
 function IntroBanner() {
   const navigate = useNavigate();
@@ -24,23 +26,41 @@ function IntroBanner() {
 }
 
 function ProblemList() {
+  const [list, setList] = useState<
+    { id: number; title: string; description: string }[]
+  >([]);
+  const navigate = useNavigate();
+  const initList = async () => {
+    const res = await apiFetch<
+      { id: number; title: string; description: string }[]
+    >("/problems", {
+      method: "GET",
+    });
+    setList(
+      res?.items
+        ? res.items.sort((a, b) => {
+            return a.id - b.id;
+          })
+        : []
+    );
+  };
+
+  useEffect(() => {
+    initList();
+  }, []);
+
   return (
-    <section className="block px-4 lg:px-0">
+    <section className="block px-4 lg:px-0 mb-8">
       <h2 className="text-2xl font-bold mb-4">경쟁 할 문제 고르기</h2>
 
       <ol
         className="
             grid gap-6 
-            grid-cols-1 
-            sm:grid-cols-2 
-            lg:grid-cols-3
+            grid-cols-1  
+            lg:grid-cols-2
           "
       >
-        {[
-          { id: "01", title: "순서 바꾸기" },
-          { id: "02", title: "트리 구조 만들기" },
-          { id: "03", title: "카드게임" },
-        ].map(({ id, title }) => (
+        {list.map(({ id, title, description }) => (
           <li
             key={id}
             className="
@@ -52,10 +72,14 @@ function ProblemList() {
             <div>
               <div className="text-gray-400 font-mono mb-2">{id}</div>
               <h3 className="text-lg font-semibold mb-4">{title}</h3>
+              <p className="text-md text-gray-500 mb-4">{description}</p>
             </div>
             <Button
               text={"도전하기"}
               option={{ color: "brandtheme", isIcon: true }}
+              change={() => {
+                navigate("/challenge", { state: id });
+              }}
             />
           </li>
         ))}

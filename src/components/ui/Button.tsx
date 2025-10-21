@@ -15,12 +15,14 @@ interface IButtonProps {
   change?: MouseEventHandler<HTMLButtonElement>;
   className?: string;
   option?: ButtonOption;
+  type?: "button" | "submit";
 }
 
 const Button: React.FC<IButtonProps> = ({
   text,
   change,
   className = "",
+  type = "button",
   option = {},
 }) => {
   const { size = "md", color = "gray", round = 8, isIcon = false } = option;
@@ -48,6 +50,7 @@ const Button: React.FC<IButtonProps> = ({
     <button
       onClick={change}
       className={`flex items-center justify-center font-bold transition-colors duration-200 ${sizeClasses} ${colorClasses} ${roundClasses} ${className}`}
+      type={type}
     >
       <span>{text}</span>
       {isIcon && (

@@ -1,5 +1,6 @@
-import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuthStore } from "../../store/authStore";
+import { useEffect } from "react";
 
 const navigate = [
   { id: 1, title: "문제선택", location: "/" },
@@ -8,7 +9,7 @@ const navigate = [
 ];
 
 export function Glb() {
-  const location = useLocation(); // 현재 URL
+  const location = useLocation();
 
   return (
     <nav className="h-full">
@@ -37,8 +38,12 @@ export function Glb() {
 }
 
 function Header() {
-  //TODO: api 조회 후 상태관리 전역으로 옮길것.
-  const [name, _] = useState<string | null>("홍길동");
+  const { user, init } = useAuthStore();
+
+  // 새로고침 후 자동 초기화
+  useEffect(() => {
+    init();
+  }, [init]);
 
   return (
     <header className="sticky top-0 bg-white border-b border-gray-200 z-10">
@@ -55,7 +60,7 @@ function Header() {
 
         <div>
           <span>
-            <strong>{name}</strong>님
+            <strong>{user ? user.nickname : "로그인 필요"}</strong>님
           </span>
         </div>
       </div>
