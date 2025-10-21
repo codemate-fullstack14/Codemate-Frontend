@@ -12,7 +12,7 @@ export interface ApiResponse<T> {
 }
 
 // 환경별 API URL
-const BASE_URL = import.meta.env.VITE_API_URL;
+const BASE_URL = import.meta.env.DEV ? import.meta.env.VITE_API_URL : ""; 
 
 async function apiFetch<T>(
   path: string, // full url 대신 path만 받도록 변경
