@@ -4,35 +4,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import apiFetch from "../../utils/apiFetch";
 import Button from "../../components/ui/Button";
 import { usePopupStore } from "../../store/popupStore";
+import ReviewBody from "../../components/popup/reviewBody";
 
-const ChallengePage: React.FC = () => {
-  const { state } = useLocation();
-  const navigate = useNavigate();
-  const { openPopup } = usePopupStore();
-
-  const [challenge, setChallenge] = useState<{
-    id?: number;
-    title?: string;
-    description?: string;
-    examplesJson?: string;
-  } | null>(null);
-
-  const [sourceCode, setSourceCode] = useState(`print("Hello World!")`);
-
-  const initDetail = async () => {
-    const res = await apiFetch<{
-      id: number;
-      title: string;
-      description: string;
-      examplesJson: string;
-    }>(`/problems/${state}`);
-    if (res) setChallenge(res);
-  };
-
-  useEffect(() => {
-    initDetail();
-  }, []);
-
+function Timer() {
   const [seconds, setSeconds] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => setSeconds((prev) => prev + 1), 1000);
@@ -49,10 +23,48 @@ const ChallengePage: React.FC = () => {
     return `${hours}:${minutes}:${secs}`;
   };
 
-  console.log(state);
+  return (
+    <div className="text-gray-700 font-mono text-sm bg-gray-100 border border-gray-300 px-3 py-1 rounded">
+      {formatTime(seconds)}
+    </div>
+  );
+}
+
+const useGetChallengeDetail = (state: number) => {
+  const [challenge, setChallenge] = useState<{
+    id?: number;
+    title?: string;
+    description?: string;
+    examplesJson?: string;
+  } | null>(null);
+  const initDetail = async () => {
+    const res = await apiFetch<{
+      id: number;
+      title: string;
+      description: string;
+      examplesJson: string;
+    }>(`/problems/${state}`);
+    if (res) setChallenge(res);
+  };
+
+  useEffect(() => {
+    initDetail();
+  }, []);
+
+  return { challenge };
+};
+
+const ChallengePage: React.FC = () => {
+  const { state } = useLocation();
+  const { challenge } = useGetChallengeDetail(state);
+  const navigate = useNavigate();
+  const { openPopup } = usePopupStore();
+
+  const [sourceCode, setSourceCode] = useState(`print("Hello World!")`);
+
   const submit = async () => {
     try {
-      await apiFetch("/api/submissions", {
+      const res = await apiFetch("/api/submissions", {
         method: "POST",
         body: JSON.stringify({
           problemId: state,
@@ -60,22 +72,11 @@ const ChallengePage: React.FC = () => {
           sourceCode,
         }),
       });
-
       openPopup({
         visible: true,
         popupType: "alert",
         header: { title: "제출 완료" },
-        body: (
-          <p className="text-center">
-            코드가 성공적으로 제출되었습니다.
-            <br /> 홈으로 돌아갑니다.
-          </p>
-        ),
-        footer: {
-          onConfirm() {
-            navigate("/");
-          },
-        },
+        body: <ReviewBody submissionId={res.id} />,
       });
     } catch (err) {
       openPopup({
@@ -114,10 +115,7 @@ const ChallengePage: React.FC = () => {
         <section className="flex-[2] bg-white shadow-md border border-gray-200 p-4 flex flex-col">
           {/* 버튼 영역 */}
           <div className="flex justify-end gap-2 mb-3 items-center">
-            <div className="text-gray-700 font-mono text-sm bg-gray-100 border border-gray-300 px-3 py-1 rounded">
-              {formatTime(seconds)}
-            </div>
-
+            <Timer />
             <Button
               text={"중단하기"}
               option={{ color: "danger" }}
@@ -140,9 +138,7 @@ const ChallengePage: React.FC = () => {
                 });
               }}
             />
-
             <Button text={"코드 테스트"} option={{ color: "brandtheme" }} />
-
             <Button
               text={"코드 제출"}
               className="bg-green-500 hover:bg-green-600 text-white"

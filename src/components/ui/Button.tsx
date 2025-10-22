@@ -5,7 +5,7 @@ const rightIcon = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/
 
 interface ButtonOption {
   size?: "sm" | "md" | "lg";
-  color?: "brandtheme" | "gray" | "danger";
+  color?: "brandtheme" | "gray" | "danger" | "transparent";
   round?: 0 | 4 | 8 | 12;
   isIcon?: boolean;
 }
@@ -33,7 +33,7 @@ const Button: React.FC<IButtonProps> = ({
 
   const sizeClasses = {
     sm: "px-2 py-1 text-sm gap-1",
-    md: "px-4 py-2 text-base ",
+    md: "px-4 py-2.5 text-base ",
     lg: "px-6 py-3 text-lg ",
   }[size];
 
@@ -41,6 +41,7 @@ const Button: React.FC<IButtonProps> = ({
     brandtheme: "bg-blue-500 text-white hover:bg-blue-600",
     gray: "bg-gray-600 text-white hover:bg-gray-700",
     danger: "bg-red-500 text-white hover:bg-red-600",
+    transparent: "bg-translate text-black hover:opacity-60",
   }[color];
 
   const roundClasses = {
