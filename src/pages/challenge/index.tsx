@@ -57,7 +57,7 @@ const ChallengePage: React.FC = () => {
       let finalStatus = res.status;
       let submissionId = res.id;
 
-      if (res.status === 'PENDING') {
+      if (res.status === 'PENDING' || res.status === 'QUEUED') {
         const pendingRes = await apiFetch(`/api/submissions/${res.id}`, { method: 'GET' });
         finalStatus = pendingRes.status;
       }
