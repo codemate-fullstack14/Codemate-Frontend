@@ -75,11 +75,9 @@ function ReviewBody({ submissionId }: IReviewBodyProps) {
     <article className="max-w-3xl mx-auto bg-white p-2 space-y-6">
       {/* 헤더 */}
       <header className="border-b border-gray-100 pb-4">
-        <h2 className="text-2xl font-bold text-gray-800">
-          {result.problemTitle}
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-800">{result.problemTitle}</h2>
         <p className="text-sm text-gray-500 mt-1">
-          {new Date(result.createdAt).toLocaleString()} · AI 모델:{" "}
+          {new Date(result.createdAt).toLocaleString()} · AI 모델:{' '}
           <span className="font-medium text-gray-700">{result.model}</span>
         </p>
       </header>
@@ -94,9 +92,7 @@ function ReviewBody({ submissionId }: IReviewBodyProps) {
 
       {/* 개선 팁 */}
       <section>
-        <h3 className=" text-lg font-semibold text-gray-800 mb-2 ">
-          개선해야 할 부분
-        </h3>
+        <h3 className=" text-lg font-semibold text-gray-800 mb-2 ">개선해야 할 부분</h3>
         <p className="text-gray-700 leading-relaxed bg-amber-50 p-4 rounded-lg border border-amber-100 max-h-[160px] overflow-y-auto">
           {result.improvementTips}
         </p>
@@ -105,20 +101,16 @@ function ReviewBody({ submissionId }: IReviewBodyProps) {
       {/* 점수 영역 */}
       <section className="flex flex-col sm:flex-row justify-between items-center bg-gray-50 rounded-xl border border-gray-200 p-4">
         <div className="text-center sm:text-left mb-4 sm:mb-0">
-          <p className="text-sm text-gray-500">
-            총합 점수: {result.totalScore}점 중
-          </p>
+          <p className="text-sm text-gray-500">총합 점수: {result.totalScore}점 중</p>
           <p className="text-4xl font-extrabold ">
-            <strong className="text-blue-600"> {result.totalScore}</strong>
+            <strong className="text-blue-600"> {result.score}</strong>
           </p>
         </div>
 
         <div className="flex gap-4">
           <div className="text-center">
             <p className="text-sm text-gray-500">AI 보너스</p>
-            <p className="text-lg font-semibold text-green-600">
-              +{result.aiBonus}
-            </p>
+            <p className="text-lg font-semibold text-green-600">+{result.aiBonus}</p>
           </div>
         </div>
       </section>
@@ -126,31 +118,27 @@ function ReviewBody({ submissionId }: IReviewBodyProps) {
       {/* AI 평가 근거 */}
       {result.mistakeReason && (
         <section>
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">
-            AI 평가 근거
-          </h3>
-          <p className="text-gray-700 leading-relaxed bg-gray-50 p-4 rounded-lg">
-            {result.mistakeReason}
-          </p>
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">AI 평가 근거</h3>
+          <p className="text-gray-700 leading-relaxed bg-gray-50 p-4 rounded-lg">{result.mistakeReason}</p>
         </section>
       )}
 
       <div className="flex  gap-2">
         <Button
-          text={"다른문제 풀기"}
-          option={{ isIcon: true, color: "transparent" }}
+          text={'다른문제 풀기'}
+          option={{ isIcon: true, color: 'transparent' }}
           className="w-full"
           change={() => {
-            navigate("/");
+            navigate('/');
             closePopup();
           }}
         />
         <Button
-          text={"순위보러가기"}
-          option={{ isIcon: true, color: "brandtheme" }}
+          text={'순위보러가기'}
+          option={{ isIcon: true, color: 'brandtheme' }}
           className="w-full"
           change={() => {
-            navigate("/rank");
+            navigate('/rank');
             closePopup();
           }}
         />
