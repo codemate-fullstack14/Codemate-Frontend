@@ -51,7 +51,7 @@ const useGetRankList = () => {
               rank: number;
             }[];
             totalUsers: number;
-          }>(`/api/rankings/problem/${id}/monthly`, { method: "GET" })
+          }>(`/api/rankings/problem/${id}/alltime`, { method: "GET" })
         )
       );
 

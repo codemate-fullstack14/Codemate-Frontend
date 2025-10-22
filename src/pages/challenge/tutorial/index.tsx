@@ -1,15 +1,18 @@
 import Editor from "@monaco-editor/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "../../../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import { usePopupStore } from "../../../store/popupStore";
+import { driver, type Driver } from "driver.js";
+import "driver.js/dist/driver.css";
 
 const TutorialPage: React.FC = () => {
   const navigate = useNavigate();
-  // const [run, setRun] = useState(false);
   const { openPopup } = usePopupStore();
+  const driverRef = useRef<Driver | null>(null);
 
   const [seconds, setSeconds] = useState(0);
+
   useEffect(() => {
     const interval = setInterval(() => setSeconds((prev) => prev + 1), 1000);
     return () => clearInterval(interval);
@@ -25,88 +28,99 @@ const TutorialPage: React.FC = () => {
     return `${hours}:${minutes}:${secs}`;
   };
 
-  // const [steps] = useState<Step[]>([
-  //   {
-  //     target: "h2.text-2xl",
-  //     content: "도전한 문제의 이름이 표시됩니다.",
-  //     placement: "bottom",
-  //   },
-  //   {
-  //     target: "section:first-of-type",
-  //     content: "문제설명과 예시 출력을 확인할 수 있습니다.",
-  //     placement: "right",
-  //   },
-  //   {
-  //     target: ".timer",
-  //     content: "경과 시간을 안내합니다.",
-  //     placement: "bottom",
-  //   },
-  //   {
-  //     target: "#stop-button",
-  //     content: "작성된 내용을 초기화 하고 홈으로 이동합니다.",
-  //     placement: "bottom",
-  //   },
-  //   {
-  //     target: "#test-code-button",
-  //     content: "작성한 코드를 테스트할 수 있습니다.(추후 기능오픈 예정)",
-  //     placement: "bottom",
-  //   },
-  //   {
-  //     target: "section:last-of-type button:last-of-type",
-  //     content: "완성된 코드를 제출하세요.",
-  //     placement: "bottom",
-  //   },
-  //   {
-  //     target: ".monaco-editor",
-  //     content: "여기에 직접 코드를 작성할 수 있습니다.",
-  //     placement: "top",
-  //   },
-  //   {
-  //     target: ".bg-gray-900",
-  //     content: "코드 실행 결과가 이 영역에 표시됩니다.",
-  //     placement: "top",
-  //   },
-  // ]);
+  // 튜토리얼 단계 정의
+  const startTutorial = () => {
+    const driverObj = driver({
+      showProgress: true,
+      nextBtnText: "다음",
+      prevBtnText: "이전",
+      doneBtnText: "완료",
+      steps: [
+        {
+          element: "h2.text-2xl",
+          popover: {
+            title: "문제 제목",
+            description: "도전한 문제의 이름이 표시됩니다.",
+            side: "bottom",
+          },
+        },
+        {
+          element: "section:first-of-type",
+          popover: {
+            title: "문제 설명",
+            description: "문제 설명과 예시 출력을 확인할 수 있습니다.",
+            side: "right",
+          },
+        },
+        {
+          element: ".timer",
+          popover: {
+            title: "경과 시간",
+            description: "문제 풀이 시간이 표시됩니다.",
+            side: "bottom",
+          },
+        },
+        {
+          element: "#stop-button",
+          popover: {
+            title: "중단하기",
+            description: "작성된 내용을 초기화하고 홈으로 이동합니다.",
+            side: "bottom",
+          },
+        },
+        {
+          element: "#test-code-button",
+          popover: {
+            title: "코드 테스트",
+            description:
+              "작성한 코드를 테스트할 수 있습니다. (추후 기능 오픈 예정)",
+            side: "bottom",
+          },
+        },
+        {
+          element: "section:last-of-type button:last-of-type",
+          popover: {
+            title: "코드 제출",
+            description: "완성된 코드를 제출하세요.",
+            side: "bottom",
+          },
+        },
+        {
+          element: ".monaco-editor",
+          popover: {
+            title: "코드 에디터",
+            description: "여기에 직접 코드를 작성할 수 있습니다.",
+            side: "top",
+          },
+        },
+        {
+          element: ".bg-gray-900",
+          popover: {
+            title: "출력 결과",
+            description: "코드 실행 결과가 표시됩니다.",
+            side: "top",
+          },
+        },
+      ],
+      onDestroyed: () => {
+        navigate("/");
+      },
+    });
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => setRun(true), 1000); // 0.8초 후 실행
-  //   return () => clearTimeout(timer);
-  // }, []);
+    driverRef.current = driverObj;
+    driverObj.drive();
+  };
 
-  //
+  useEffect(() => {
+    const timer = setTimeout(startTutorial, 300);
+    return () => {
+      clearTimeout(timer);
+      driverRef.current?.destroy();
+    };
+  }, []);
+
   return (
     <div className="flex flex-col h-screen bg-gray-50">
-      {/* {run && (
-        <Joyride
-          key={run ? "active" : "inactive"}
-          steps={steps}
-          run={run}
-          continuous
-          showSkipButton
-          scrollToFirstStep
-          locale={{
-            back: "이전",
-            close: "닫기",
-            last: "완료",
-            next: "다음",
-            skip: "건너뛰기",
-          }}
-          callback={({ status }) => {
-            if (status === "finished" || status === "skipped") {
-              navigate("/");
-            }
-          }}
-          styles={{
-            options: {
-              primaryColor: "#4f46e5",
-              zIndex: 10000,
-            },
-            buttonNext: { backgroundColor: "#4f46e5" },
-            buttonBack: { color: "#6b7280" },
-          }}
-        />
-      )} */}
-
       {/* 헤더 */}
       <header className="h-16 flex justify-center items-center border-b border-gray-300">
         <h2 className="text-2xl">반갑게인사하기</h2>
