@@ -53,12 +53,31 @@ const ChallengePage: React.FC = () => {
         method: 'POST',
         body: JSON.stringify({ problemId: state, language: 'python', sourceCode }),
       });
-      openPopup({
-        visible: true,
-        popupType: 'alert',
-        header: { title: '제출 완료' },
-        body: <ReviewBody submissionId={res.id} />,
-      });
+
+      let finalStatus = res.status;
+      let submissionId = res.id;
+
+      if (res.status === 'PENDING') {
+        const pendingRes = await apiFetch(`/api/submissions/${res.id}`, { method: 'GET' });
+        finalStatus = pendingRes.status;
+      }
+
+      if (finalStatus === 'DONE') {
+        openPopup({
+          visible: true,
+          popupType: 'alert',
+          header: { title: '제출 완료' },
+          body: <ReviewBody submissionId={submissionId} />,
+        });
+      } else {
+        openPopup({
+          visible: true,
+          popupType: 'alert',
+          header: { title: '제출 실패' },
+          body: <p>컴파일 에러 :: 작성한 내용을 다시 점검하세요.</p>,
+          footer: { onConfirm() {} },
+        });
+      }
     } catch {
       openPopup({
         visible: true,
@@ -120,10 +139,10 @@ const ChallengePage: React.FC = () => {
                 })
               }
             />
-            <Button
+            {/* <Button
               text="코드 테스트"
               className="bg-[#0064FF]/10 text-[#0064FF] hover:bg-[#0064FF]/20 transition-colors"
-            />
+            /> */}
             <Button
               text="제출하기"
               className="bg-[#0064FF] text-white hover:bg-[#0050E0] transition-colors"

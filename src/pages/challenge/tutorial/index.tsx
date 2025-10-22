@@ -74,14 +74,14 @@ const TutorialPage: React.FC = () => {
             side: 'bottom',
           },
         },
-        {
-          element: '#test-code-button',
-          popover: {
-            title: '코드 테스트',
-            description: '작성한 코드를 테스트할 수 있습니다. (추후 기능 오픈 예정)',
-            side: 'bottom',
-          },
-        },
+        // {
+        //   element: '#test-code-button',
+        //   popover: {
+        //     title: '코드 테스트',
+        //     description: '작성한 코드를 테스트할 수 있습니다. (추후 기능 오픈 예정)',
+        //     side: 'bottom',
+        //   },
+        // },
         {
           element: 'section:last-of-type button:last-of-type',
           popover: {
@@ -172,11 +172,11 @@ const TutorialPage: React.FC = () => {
                 })
               }
             />
-            <Button
+            {/* <Button
               id="test-code-button"
               text="코드 테스트"
               className="bg-[#0064FF]/10 text-[#0064FF] hover:bg-[#0064FF]/20 transition-colors"
-            />
+            /> */}
             <Button text="제출하기" className="bg-[#0064FF] text-white hover:bg-[#0050E0] transition-colors" />
           </div>
 

@@ -90,6 +90,14 @@ function ReviewBody({ submissionId }: IReviewBodyProps) {
         </p>
       </section>
 
+      {/* AI 평가 근거 */}
+      {result.mistakeReason && (
+        <section>
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">AI 평가 근거</h3>
+          <p className="text-gray-700 leading-relaxed bg-gray-50 p-4 rounded-lg">{result.mistakeReason}</p>
+        </section>
+      )}
+
       {/* 개선 팁 */}
       <section>
         <h3 className=" text-lg font-semibold text-gray-800 mb-2 ">개선해야 할 부분</h3>
@@ -100,28 +108,23 @@ function ReviewBody({ submissionId }: IReviewBodyProps) {
 
       {/* 점수 영역 */}
       <section className="flex flex-col sm:flex-row justify-between items-center bg-gray-50 rounded-xl border border-gray-200 p-4">
-        <div className="text-center sm:text-left mb-4 sm:mb-0">
-          <p className="text-sm text-gray-500">총합 점수: {result.totalScore}점 중</p>
-          <p className="text-4xl font-extrabold ">
-            <strong className="text-blue-600"> {result.score}</strong>
-          </p>
-        </div>
-
-        <div className="flex gap-4">
+        <div className="flex items-end gap-4">
+          <div className="text-center">
+            <p className="text-sm text-gray-500">문제해결</p>
+            <p className="text-lg font-semibold ">{result.score}</p>
+          </div>
           <div className="text-center">
             <p className="text-sm text-gray-500">AI 보너스</p>
             <p className="text-lg font-semibold text-green-600">+{result.aiBonus}</p>
           </div>
         </div>
-      </section>
 
-      {/* AI 평가 근거 */}
-      {result.mistakeReason && (
-        <section>
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">AI 평가 근거</h3>
-          <p className="text-gray-700 leading-relaxed bg-gray-50 p-4 rounded-lg">{result.mistakeReason}</p>
-        </section>
-      )}
+        <div className="text-center sm:text-left mb-4 sm:mb-0">
+          <p className="text-4xl font-extrabold">
+            <strong className="text-blue-600"> {result.totalScore}점</strong>
+          </p>
+        </div>
+      </section>
 
       <div className="flex  gap-2">
         <Button

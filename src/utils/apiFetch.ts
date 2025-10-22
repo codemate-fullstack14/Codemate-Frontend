@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 
 export interface ApiResponse<T> {
+  status: string;
   data: T;
   items?: T;
   error: string | null;
