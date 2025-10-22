@@ -79,13 +79,13 @@ const ChallengePage: React.FC = () => {
 
       if (finalStatus === 'DONE') {
         if (finalVerdict === 'AC') {
-          setResultText('정답입니다');
+          setResultText('컴파일 및 실행에 성공했습니다.');
           setId(submissionId);
         } else {
           let msg = '';
           switch (finalVerdict) {
             case 'WA':
-              msg = '오답입니다!';
+              msg = '';
               break;
             case 'RE':
               msg = '런타임 에러가 발생했습니다.';
