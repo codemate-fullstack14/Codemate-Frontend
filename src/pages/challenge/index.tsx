@@ -46,8 +46,21 @@ const ChallengePage: React.FC = () => {
   const { openPopup } = usePopupStore();
 
   const [sourceCode, setSourceCode] = useState(`print("Hello World!")`);
+  const [resultText, setResultText] = useState('실행 결과가 여기에 표시됩니다.');
+  const [id, setId] = useState<number | undefined>(undefined);
 
   const submit = async () => {
+    if (id === undefined) return;
+
+    openPopup({
+      visible: true,
+      popupType: 'alert',
+      header: { title: '제출 완료' },
+      body: <ReviewBody submissionId={id} />,
+    });
+  };
+
+  const codeTesting = async () => {
     try {
       const res = await apiFetch('/api/submissions', {
         method: 'POST',
@@ -55,37 +68,46 @@ const ChallengePage: React.FC = () => {
       });
 
       let finalStatus = res.status;
+      let finalVerdict = res.verdict;
       let submissionId = res.id;
 
       if (res.status === 'PENDING' || res.status === 'QUEUED') {
         const pendingRes = await apiFetch(`/api/submissions/${res.id}`, { method: 'GET' });
         finalStatus = pendingRes.status;
+        finalVerdict = pendingRes.verdict;
       }
 
       if (finalStatus === 'DONE') {
-        openPopup({
-          visible: true,
-          popupType: 'alert',
-          header: { title: '제출 완료' },
-          body: <ReviewBody submissionId={submissionId} />,
-        });
-      } else {
-        openPopup({
-          visible: true,
-          popupType: 'alert',
-          header: { title: '제출 실패' },
-          body: <p>컴파일 에러 :: 작성한 내용을 다시 점검하세요.</p>,
-          footer: { onConfirm() {} },
-        });
+        if (finalVerdict === 'AC') {
+          setResultText('정답입니다');
+          setId(submissionId);
+        } else {
+          let msg = '';
+          switch (finalVerdict) {
+            case 'WA':
+              msg = '오답입니다!';
+              break;
+            case 'RE':
+              msg = '런타임 에러가 발생했습니다.';
+              break;
+            case 'TLE':
+              msg = '시간 초과 (Time Limit Exceeded) 입니다.';
+              break;
+            case 'MLE':
+              msg = '메모리 초과 (Memory Limit Exceeded) 입니다.';
+              break;
+            case 'CE':
+              msg = '컴파일 에러가 발생했습니다.';
+              break;
+            default:
+              msg = '알 수 없는 오류가 발생했습니다.';
+          }
+          setResultText(msg);
+          setId(undefined);
+        }
       }
     } catch {
-      openPopup({
-        visible: true,
-        popupType: 'alert',
-        header: { title: '제출 실패' },
-        body: <p className="text-center">제출 중 오류가 발생했습니다.</p>,
-        footer: { onConfirm() {} },
-      });
+      setResultText('제출 중 오류가 발생했습니다.');
     }
   };
 
@@ -139,14 +161,12 @@ const ChallengePage: React.FC = () => {
                 })
               }
             />
-            {/* <Button
-              text="코드 테스트"
-              className="bg-[#0064FF]/10 text-[#0064FF] hover:bg-[#0064FF]/20 transition-colors"
-            /> */}
+            <Button text="코드 테스트" change={codeTesting} />
             <Button
               text="제출하기"
               className="bg-[#0064FF] text-white hover:bg-[#0050E0] transition-colors"
               change={submit}
+              disabled={id === undefined}
             />
           </div>
 
@@ -179,7 +199,7 @@ const ChallengePage: React.FC = () => {
           <div className="mt-4">
             <h3 className="text-sm font-medium text-gray-700 mb-2">실행 결과</h3>
             <div className="bg-gray-900 text-gray-100 rounded-md p-3 h-32 overflow-auto text-sm font-mono">
-              실행 결과가 여기에 표시됩니다.
+              {resultText}
             </div>
           </div>
         </section>

@@ -55,7 +55,7 @@ const Button: React.FC<IButtonProps> = ({
     <button
       id={id}
       onClick={change}
-      className={`flex items-center justify-center font-bold transition-colors duration-200 ${sizeClasses} ${colorClasses} ${roundClasses} ${className}`}
+      className={`flex items-center justify-center font-bold transition-colors duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${sizeClasses} ${colorClasses} ${roundClasses} ${className}`}
       type={type}
       disabled={disabled}
     >
@@ -64,10 +64,10 @@ const Button: React.FC<IButtonProps> = ({
         <span
           style={{
             backgroundImage: rightIcon,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "contain",
-            width: "1em",
-            height: "1em",
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'contain',
+            width: '1em',
+            height: '1em',
           }}
           aria-hidden="true"
         />
