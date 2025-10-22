@@ -120,10 +120,10 @@ const TutorialPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col h-screen bg-gray-100">
       {/* 헤더 */}
-      <header className="h-16 flex justify-center items-center border-b border-gray-300">
-        <h2 className="text-2xl">반갑게인사하기</h2>
+      <header className="h-16 flex justify-center bg-white items-center border-b border-gray-300">
+        <h2 className="text-2xl font-bold">Hello World</h2>
       </header>
 
       {/* 본문 영역 */}
@@ -133,11 +133,9 @@ const TutorialPage: React.FC = () => {
           <h2 className="text-xl font-bold mb-4 text-gray-800">문제 설명</h2>
           <p className="text-gray-700 leading-relaxed whitespace-pre-line">
             처음 온 고객분들에게 첫인상이 중요한 만큼 반갑게 인사를 건내보아요.
-            {"\n\n"}
+            {'\n\n'}
             예시:
-            <span className="block bg-gray-100 p-2 rounded mt-2 text-sm">
-              Output:: hello world!
-            </span>
+            <span className="block bg-gray-100 p-2 rounded mt-2 text-sm">Output:: hello world!</span>
           </p>
         </section>
 
@@ -151,13 +149,13 @@ const TutorialPage: React.FC = () => {
 
             <Button
               id="stop-button"
-              text={"중단하기"}
-              option={{ color: "danger" }}
+              text={'중단하기'}
+              option={{ color: 'danger' }}
               change={() => {
                 openPopup({
                   visible: true,
-                  popupType: "confirm",
-                  header: { title: "대결 종료" },
+                  popupType: 'confirm',
+                  header: { title: '대결 종료' },
                   body: (
                     <p className="text-center">
                       작업을 중단합니다.
@@ -166,7 +164,7 @@ const TutorialPage: React.FC = () => {
                   ),
                   footer: {
                     onConfirm() {
-                      navigate("/");
+                      navigate('/');
                     },
                   },
                 });
@@ -175,26 +173,21 @@ const TutorialPage: React.FC = () => {
 
             <Button
               id="test-code-button"
-              text={"코드 테스트"}
-              option={{ color: "brandtheme" }}
+              text={'코드 테스트'}
+              option={{ color: 'brandtheme' }}
               className="p-0"
               disabled
             />
-            <Button
-              text={"코드 제출"}
-              className="bg-green-500 hover:bg-green-600"
-              option={{ isIcon: true }}
-            />
+            <Button text={'코드 제출'} className="bg-green-500 hover:bg-green-600" option={{ isIcon: true }} />
           </div>
-
-          {/* 코드 에디터 */}
+          ;{/* 코드 에디터 */}
           <div className="flex-1 border border-gray-300 overflow-hidden">
             <Editor
               height="100%"
               defaultLanguage="python"
               defaultValue={`# 여기에 코드를 작성하세요\nprint("hello world!")`}
               theme="vs-light"
-              onMount={(editor) => {
+              onMount={editor => {
                 editor.updateOptions({ contextmenu: false });
               }}
               options={{
@@ -205,12 +198,9 @@ const TutorialPage: React.FC = () => {
               }}
             />
           </div>
-
-          {/* 실행 결과 */}
+          ;{/* 실행 결과 */}
           <div className="mt-4">
-            <h3 className="text-sm font-semibold text-gray-700 mb-1">
-              실행 결과
-            </h3>
+            <h3 className="text-sm font-semibold text-gray-700 mb-1">실행 결과</h3>
             <div className="bg-gray-900 text-gray-100 rounded-lg p-3 h-32 overflow-auto text-sm font-mono">
               실행 결과가 여기에 표시됩니다.
             </div>

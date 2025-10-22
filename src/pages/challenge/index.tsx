@@ -90,10 +90,10 @@ const ChallengePage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col h-screen bg-gray-100">
       {/* 헤더 */}
-      <header className="h-16 flex justify-center items-center border-b border-gray-300">
-        <h2 className="text-2xl">{challenge?.title}</h2>
+      <header className="h-16 flex justify-center bg-white items-center border-b border-gray-300">
+        <h2 className="text-2xl font-bold">{challenge?.title}</h2>
       </header>
 
       {/* 본문 */}
@@ -101,13 +101,10 @@ const ChallengePage: React.FC = () => {
         {/* 문제 설명 */}
         <section className="flex-1 bg-white shadow-md p-6 border border-gray-200">
           <h2 className="text-xl font-bold mb-4 text-gray-800">문제 설명</h2>
-          <p className="text-gray-700 leading-relaxed whitespace-pre-line mb-4">
-            {challenge?.description}
-          </p>
+          <p className="text-gray-700 leading-relaxed whitespace-pre-line mb-4">{challenge?.description}</p>
           <span>예제:</span>
           <div className="block bg-gray-100 p-2 rounded mt-2 text-sm">
-            {challenge?.examplesJson &&
-              JSON.stringify(challenge.examplesJson, null, 2)}
+            {challenge?.examplesJson && JSON.stringify(challenge.examplesJson, null, 2)}
           </div>
         </section>
 
@@ -117,13 +114,13 @@ const ChallengePage: React.FC = () => {
           <div className="flex justify-end gap-2 mb-3 items-center">
             <Timer />
             <Button
-              text={"중단하기"}
-              option={{ color: "danger" }}
+              text={'중단하기'}
+              option={{ color: 'danger' }}
               change={() => {
                 openPopup({
                   visible: true,
-                  popupType: "confirm",
-                  header: { title: "대결 종료" },
+                  popupType: 'confirm',
+                  header: { title: '대결 종료' },
                   body: (
                     <p className="text-center">
                       작업을 중단합니다.
@@ -132,15 +129,15 @@ const ChallengePage: React.FC = () => {
                   ),
                   footer: {
                     onConfirm() {
-                      navigate("/");
+                      navigate('/');
                     },
                   },
                 });
               }}
             />
-            <Button text={"코드 테스트"} option={{ color: "brandtheme" }} />
+            <Button text={'코드 테스트'} option={{ color: 'brandtheme' }} />
             <Button
-              text={"코드 제출"}
+              text={'코드 제출'}
               className="bg-green-500 hover:bg-green-600 text-white"
               option={{ isIcon: true }}
               change={submit}
@@ -154,27 +151,20 @@ const ChallengePage: React.FC = () => {
               defaultLanguage="python"
               value={sourceCode}
               theme="vs-light"
-              onChange={(value) => setSourceCode(value || "")}
+              onChange={value => setSourceCode(value || '')}
               options={{
                 fontSize: 14,
                 minimap: { enabled: false },
                 scrollBeyondLastLine: false,
                 automaticLayout: true,
               }}
-              onMount={(editor) => {
-                editor.onKeyDown(
-                  (e: {
-                    metaKey: any;
-                    ctrlKey: any;
-                    code: string;
-                    preventDefault: () => void;
-                  }) => {
-                    if ((e.metaKey || e.ctrlKey) && e.code === "KeyV") {
-                      e.preventDefault();
-                      alert("붙여넣기는 허용되지 않습니다.");
-                    }
+              onMount={editor => {
+                editor.onKeyDown((e: { metaKey: any; ctrlKey: any; code: string; preventDefault: () => void }) => {
+                  if ((e.metaKey || e.ctrlKey) && e.code === 'KeyV') {
+                    e.preventDefault();
+                    alert('붙여넣기는 허용되지 않습니다.');
                   }
-                );
+                });
                 editor.updateOptions({ contextmenu: false });
               }}
             />
@@ -182,9 +172,7 @@ const ChallengePage: React.FC = () => {
 
           {/* 실행 결과 */}
           <div className="mt-4">
-            <h3 className="text-sm font-semibold text-gray-700 mb-1">
-              실행 결과
-            </h3>
+            <h3 className="text-sm font-semibold text-gray-700 mb-1">실행 결과</h3>
             <div className="bg-gray-900 text-gray-100 rounded-lg p-3 h-32 overflow-auto text-sm font-mono">
               실행 결과가 여기에 표시됩니다.
             </div>

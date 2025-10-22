@@ -1,7 +1,7 @@
-import { useEffect, useState, useRef, useCallback } from "react";
-import { Client, type IMessage } from "@stomp/stompjs";
-import SockJS from "sockjs-client";
-import Cookies from "js-cookie";
+import { useEffect, useState, useRef, useCallback } from 'react';
+import { Client, type IMessage } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
+import Cookies from 'js-cookie';
 
 export interface ChatMessage {
   id: number;
@@ -16,43 +16,51 @@ export const useChat = () => {
   const clientRef = useRef<Client | null>(null);
 
   useEffect(() => {
-    const token = Cookies.get("accessToken");
+    const token = Cookies.get('accessToken');
     if (!token) return;
 
-    // SockJS 사용
-    const socket = new SockJS("http://3.107.155.57/ws");
+    // 🔇 console.error를 임시로 비활성화
+    const originalError = console.error;
+    console.error = (...args) => {
+      const msg = args?.[0]?.toString?.() ?? '';
+      if (msg.includes('Failed to load resource') || msg.includes('WebSocket connection to')) {
+        return;
+      }
+      originalError(...args);
+    };
+
+    const socket = new SockJS('http://3.107.155.57/ws');
 
     const client = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
-      // debug: (str) => console.log(str), // 디버그용
       connectHeaders: {
-        Authorization: `Bearer ${token}`, // JWT 헤더
+        Authorization: `Bearer ${token}`,
       },
     });
 
     client.onConnect = () => {
-      console.log("WebSocket connected");
+      console.log('WebSocket connected');
 
-      client.subscribe("/topic/chat", (msg: IMessage) => {
+      client.subscribe('/topic/chat', (msg: IMessage) => {
         try {
           const body: ChatMessage = JSON.parse(msg.body);
-          setMessages((prev) => [...prev, body]);
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (err) {
-          console.error("Invalid chat message:", msg.body);
+          setMessages(prev => [...prev, body]);
+        } catch {
+          // 무시
         }
       });
     };
 
-    client.onStompError = (frame) => {
-      console.error("STOMP error:", frame);
+    client.onStompError = () => {
+      // 필요 시 로그 추가
     };
 
     client.activate();
     clientRef.current = client;
 
     return () => {
+      console.error = originalError;
       client.deactivate();
     };
   }, []);
@@ -60,7 +68,7 @@ export const useChat = () => {
   const sendMessage = useCallback((message: string) => {
     if (clientRef.current?.connected) {
       clientRef.current.publish({
-        destination: "/app/chat.send",
+        destination: '/app/chat.send',
         body: JSON.stringify({ message }),
       });
     }

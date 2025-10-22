@@ -2,11 +2,11 @@ import { create } from "zustand";
 
 interface PopupState {
   visible: boolean;
-  popupType?: "alert" | "confirm" | "delete";
+  popupType?: 'alert' | 'confirm' | 'delete' | 'review';
   body?: React.ReactNode;
   header?: { title?: string; isClose?: boolean };
   footer?: { onConfirm?: () => void; onCancel?: () => void };
-  openPopup: (props: Omit<PopupState, "openPopup" | "closePopup">) => void;
+  openPopup: (props: Omit<PopupState, 'openPopup' | 'closePopup'>) => void;
   closePopup: () => void;
 }
 

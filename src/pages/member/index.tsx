@@ -1,43 +1,47 @@
-import { useEffect, useState } from "react";
-import apiFetch from "../../utils/apiFetch";
-import { useAuthStore } from "../../store/authStore";
-import { usePopupStore } from "../../store/popupStore";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { useAuthStore } from '../../store/authStore';
+import { usePopupStore } from '../../store/popupStore';
+import { useNavigate } from 'react-router-dom';
 
-type TabType = "myInfo" | "myHistory";
+type TabType = 'myInfo' | 'myHistory';
 
 function MyHistory() {
-  const initHistory = async () => {
-    const res = apiFetch("/reviews", {
-      method: "POST",
-      body: JSON.stringify({ submissionId: 17 }),
-    });
-    console.log(res);
-  };
+  // const initHistory = async () => {
+  //   const res = apiFetch("/reviews", {
+  //     method: "POST",
+  //     body: JSON.stringify({ submissionId: 17 }),
+  //   });
+  //   console.log(res);
+  // };
 
-  useEffect(() => {
-    initHistory();
-  }, []);
+  // useEffect(() => {
+  //   initHistory();
+  // }, []);
 
-  return <></>;
+  return (
+    <>
+      현제 서비스 준비 중입니다.
+      <br /> 빠른시일에 오픈을 약속하겠습니다.
+    </>
+  );
 }
 
 function MemberPage() {
-  const { logout } = useAuthStore();
+  const { logout, user } = useAuthStore();
   const { openPopup } = usePopupStore();
-  const [active, setActive] = useState<TabType>("myInfo");
+  const [active, setActive] = useState<TabType>('myInfo');
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
     openPopup({
       visible: true,
-      popupType: "alert",
+      popupType: 'alert',
       body: <p>로그아웃되었습니다.</p>,
-      header: { title: "로그아웃" },
+      header: { title: '로그아웃' },
       footer: {
         onConfirm() {
-          navigate("/login");
+          navigate('/login');
         },
       },
     });
@@ -51,11 +55,9 @@ function MemberPage() {
           <ul className="flex md:flex-col justify-around md:justify-start">
             <li>
               <button
-                onClick={() => setActive("myInfo")}
+                onClick={() => setActive('myInfo')}
                 className={`border w-full text-left px-4 py-2 transition-colors duration-200 ${
-                  active === "myInfo"
-                    ? "bg-gray-600 text-white"
-                    : "hover:bg-gray-300"
+                  active === 'myInfo' ? 'bg-gray-600 text-white' : 'hover:bg-gray-300'
                 }`}
               >
                 내정보
@@ -63,11 +65,9 @@ function MemberPage() {
             </li>
             <li>
               <button
-                onClick={() => setActive("myHistory")}
+                onClick={() => setActive('myHistory')}
                 className={`w-full text-left px-4 py-2 transition-colors duration-200 ${
-                  active === "myHistory"
-                    ? "bg-gray-600 text-white"
-                    : "hover:bg-gray-300"
+                  active === 'myHistory' ? 'bg-gray-600 text-white' : 'hover:bg-gray-300'
                 }`}
               >
                 내가 푼 문제
@@ -88,14 +88,32 @@ function MemberPage() {
 
       {/* --- 메인 콘텐츠 --- */}
       <main className="flex-1 p-6">
-        {active === "myInfo" && (
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">내정보</h2>
-            <p>여기에 회원 정보를 표시합니다.</p>
-          </div>
+        {active === 'myInfo' && (
+          <section className="flex flex-col items-center justify-center bg-white  p-8 ">
+            {/* 프로필 이미지 (이니셜) */}
+
+            <span className="tossface text-6xl">{['💙', '🐱', '🍀', '👻', '🎃'][Math.floor(Math.random() * 5)]}</span>
+            {/* 사용자 정보 */}
+            <h2 className="text-2xl font-semibold mt-4 mb-1 text-gray-800">{user?.nickname ?? '사용자'}</h2>
+            <p className="text-gray-500 mb-6">{user?.email ?? '이메일 정보 없음'}</p>
+
+            <div className="w-full border-t border-gray-200 my-4"></div>
+
+            {/* 정보 상세 */}
+            <div className="w-full space-y-3 text-gray-700">
+              <div className="flex justify-between bg-gray-50 p-3 rounded-md border border-gray-200">
+                <span className="font-medium text-gray-600">닉네임</span>
+                <span>{user?.nickname ?? '-'}</span>
+              </div>
+              <div className="flex justify-between bg-gray-50 p-3 rounded-md border border-gray-200">
+                <span className="font-medium text-gray-600">이메일</span>
+                <span>{user?.email ?? '-'}</span>
+              </div>
+            </div>
+          </section>
         )}
 
-        {active === "myHistory" && (
+        {active === 'myHistory' && (
           <div>
             <h2 className="text-2xl font-semibold mb-4">내기록</h2>
             <MyHistory />
